@@ -1,0 +1,3 @@
+let tpl = Object.create(null)
+tpl['select.html'] = '<% if (readonly) { %> <div class="coreui-form__field-readonly col-form-label"><%= selectOptions.join(\', \') %></div> <% } else { %> <select <%- attr %>> <% $.each(options, function(key, option) { %> <% if (option.type === \'group\') { %> <optgroup<%- option.attr %>/> <% $.each(option.options, function(key, groupOption) { %> <option <%- groupOption.attr %>/><%= groupOption.text %></option> <% }); %> </optgroup> <% } else { %> <option <%- option.attr %>/><%= option.text %></option> <% } %> <% }); %> </select> <% } %>';
+export default tpl;
