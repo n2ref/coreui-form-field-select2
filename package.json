@@ -1,6 +1,6 @@
 {
   "name": "coreui-form-field-select2",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CoreUI form field Select2",
   "scripts": {
     "build_all": "gulp build_tpl && gulp build_js && gulp build_js_min && gulp build_css_min && gulp build_css && npm run test_js",

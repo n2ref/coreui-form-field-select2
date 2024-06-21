@@ -1,23 +1,42 @@
 
 import fieldPrivate from './field.private';
 
-/**
- * @property {string} _id
- * @property {object} _form
- * @property {string} _contentId
- * @property {boolean} _readonly
- * @property {string|Array} _value
- * @property {object} _options
- * @property {function} getId
- * @property {function} getContentId
- * @property {function} getOptions
- * @property {function} show
- * @property {function} hide
- * @property {function} isAlloySend
- */
-class FieldSelect2 extends CoreUI.form.abstract.field {
 
+/**
+ *
+ */
+class FieldSelect2 {
+
+    _id            = null;
+    _form          = null;
+    _contentId     = '';
+    _readonly      = null;
+    _value         = null;
     _selectOptions = [];
+
+    _options = {
+        type: 'select2',
+        name: null,
+        label: null,
+        labelWidth: null,
+        width: null,
+        description: null,
+        descriptionHelp: null,
+        invalidText: null,
+        validText: null,
+        fields: null,
+        attr: {
+            class: 'form-select d-inline-block'
+        },
+        required: null,
+        readonly: null,
+        show: true,
+        position: null,
+        noSend: null,
+        options: [],
+        select2: {},
+    };
+
 
     /**
      * Инициализация
@@ -26,41 +45,22 @@ class FieldSelect2 extends CoreUI.form.abstract.field {
      */
     constructor(form, options) {
 
-        options = $.extend(true, {
-            type: 'select2',
-            name: null,
-            label: null,
-            labelWidth: null,
-            width: null,
-            outContent: null,
-            description: null,
-            errorText: null,
-            fields: null,
-            attr: {
-                class: 'form-select d-inline-block'
-            },
-            required: null,
-            readonly: null,
-            show: true,
-            position: null,
-            noSend: null,
-            options: [],
-        }, options);
-
-
-        let selectOptions = [];
-
         if (options.hasOwnProperty('options') &&
             typeof options.options === 'object' &&
             options.options !== null
         ) {
-            selectOptions   = options.options;
+            this._selectOptions = options.options
             options.options = [];
         }
 
-        super(form, options);
 
-        this._selectOptions = selectOptions
+        this._form      = form;
+        this._id        = options.hasOwnProperty('id') && typeof options.id === 'string' ? options.id : '';
+        this._contentId = options.hasOwnProperty('contentId') && typeof options.contentId === 'string' ? options.contentId : '';
+        this._readonly  = options.hasOwnProperty('readonly') && typeof options.readonly === 'boolean' ? options.readonly : false;
+        this._value     = options.hasOwnProperty('value') && ['string', 'number', 'object'].indexOf(typeof options.value) >= 0 ? options.value : null;
+        this._options   = $.extend(true, this._options, options);
+
 
         if ( ! this._readonly) {
             let that = this;
@@ -73,12 +73,77 @@ class FieldSelect2 extends CoreUI.form.abstract.field {
 
 
     /**
+     * Получение id поля
+     * @return {string}
+     */
+    getId() {
+        return this._id;
+    }
+
+
+    /**
+     * Получение id контентаполя
+     * @return {string}
+     */
+    getContentId() {
+        return this._contentId;
+    }
+
+
+    /**
+     * Получение параметров
+     * @returns {object}
+     */
+    getOptions() {
+        return $.extend(true, {}, this._options);
+    }
+
+
+    /**
+     * Показ поля
+     * @param {int} duration
+     */
+    show(duration) {
+
+        $('#coreui-form-' + this.getId())
+            .addClass('d-flex')
+            .removeClass('d-none')
+            .css('opacity', 0)
+            .animate({
+                opacity: 1,
+            }, duration || 200, function () {
+                $(this).css('opacity', '');
+            });
+    }
+
+
+    /**
+     * Скрытие поля
+     * @param {int} duration
+     */
+    hide(duration) {
+
+        $('#coreui-form-' + this.getId())
+            .animate({
+                opacity: 0,
+            }, duration || 200, function () {
+                $(this).removeClass('d-flex').addClass('d-none').css('opacity', '');
+            });
+    }
+
+
+    /**
      * Изменение режима поля только для чтения
      * @param {boolean} isReadonly
      */
     readonly(isReadonly) {
 
-        super.readonly(isReadonly)
+        this._value    = this.getValue();
+        this._readonly = !! isReadonly;
+
+        $('.content-' + this._contentId).html(
+            this.renderContent()
+        );
 
         if ( ! isReadonly) {
             fieldPrivate.initEvents(this);
@@ -191,7 +256,7 @@ class FieldSelect2 extends CoreUI.form.abstract.field {
     /**
      * Установка валидности поля
      * @param {boolean|null} isValid
-     * @param {text} text
+     * @param {string} text
      */
     validate(isValid, text) {
 
@@ -257,6 +322,15 @@ class FieldSelect2 extends CoreUI.form.abstract.field {
         }
 
         return null;
+    }
+
+
+    /**
+     * Проверка на то, что поле можно отправлять
+     * @return {boolean}
+     */
+    isAlloySend() {
+        return ! this._options.noSend;
     }
 
 

@@ -244,6 +244,23 @@ let fieldPrivate = {
             select2Options.theme = "bootstrap-5";
         }
 
+        if ( ! select2Options.hasOwnProperty('language')) {
+            let formOptions = field._form.getOptions();
+
+            if (typeof formOptions.lang === 'string') {
+                select2Options.language = formOptions.lang;
+            }
+        }
+
+        if ( ! select2Options.hasOwnProperty('closeOnSelect') &&
+            options.hasOwnProperty('attr') &&
+            utils.isObject(options.attr) &&
+            options.attr &&
+            options.attr.hasOwnProperty('multiple')
+        ) {
+            select2Options.closeOnSelect = false;
+        }
+
         $('.content-' + field.getContentId() + ' select').select2(select2Options);
     }
 }

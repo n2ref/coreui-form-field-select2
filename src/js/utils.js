@@ -1,29 +1,6 @@
 
 let utils = {
 
-    /**
-     * Обработка полей в полях
-     * @param form
-     * @param defaultOptions
-     * @param fieldOptions
-     */
-    mergeFieldOptions: function (form, defaultOptions, fieldOptions) {
-
-        let options = $.extend(true, {}, defaultOptions);
-
-        if (fieldOptions) {
-            if (options.hasOwnProperty('attr') && typeof options.attr === 'object' &&
-                fieldOptions.hasOwnProperty('attr') && typeof fieldOptions.attr === 'object'
-            ) {
-                fieldOptions.attr = this.mergeAttr(options.attr, fieldOptions.attr);
-            }
-
-            options = $.extend(true, {}, options, fieldOptions);
-        }
-
-        return options
-    },
-
 
     /**
      * Объединение атрибутов
