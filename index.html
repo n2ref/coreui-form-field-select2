@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoreUI Form</title>
+
+    <link href="dist/page.min.css" rel="stylesheet"/>
+
+    <script src="dist/page.min.js"></script>
+
+    <link href="dist/coreui.form.min.css" rel="stylesheet"/>
+    <script src="dist/coreui-form.min.js"></script>
+
+    <link href="dist/coreui.form-select2.min.css" rel="stylesheet"/>
+    <script src="dist/coreui-form-select2.min.js"></script>
+
+    <script src="src/js/examples.js"></script>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#docs-sidenav">
+
+    <section class="text-left">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mb-5">
+                    <header>
+                        <nav class="navbar navbar-expand-lg navbar-default">
+                            <div class="container-fluid">
+                                <a class="navbar-brand" href="#">CoreUI</a>
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                        <li class="nav-item"><a class="nav-link" href="https://n2ref.github.io/coreui-panel">Panel</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="https://n2ref.github.io/coreui-table">Table</a></li>
+                                        <li class="nav-item"><span class="nav-link active">Form</span></li>
+                                        <li class="nav-item"><a class="nav-link" href="https://n2ref.github.io/coreui-layout">Layout</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="https://n2ref.github.io/coreui-info">Info</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="https://n2ref.github.io/coreui-modal">Modal</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="https://n2ref.github.io/coreui-notice">Notice</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="https://n2ref.github.io/coreui-breadcrumb">Breadcrumb</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="https://n2ref.github.io/coreui-alert">Alert</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="https://n2ref.github.io/coreui-chart">Chart</a></li>
+                                    </ul>
+
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li class="nav-item"><a class="nav-link" href="https://github.com/n2ref/coreui-form">GitHub</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                    </header>
+                </div>
+                <div class="col-lg-2">
+                    <div id="docs-sidenav" class="hidden-xs hidden-sm hidden-md d-none d-lg-block"
+                         data-bs-spy="affix" data-bs-offset-top="90" data-bs-offset-bottom="70">
+                        <ul class="nav">
+                            <li><a href="#get-started">Get Started</a></li>
+                            <li>
+                                <a href="#examples">Examples</a>
+                                <ul class="nav">
+                                    <li><a href="#example-single-select">Single select</a></li>
+                                    <li><a href="#example-multiple-select">Multiple select</a></li>
+                                    <li><a href="#example-groups">Groups</a></li>
+                                    <li><a href="#example-dynamic-option">Dynamic options</a></li>
+                                    <li><a href="#example-validation">Validation</a></li>
+                                    <li><a href="#example-autocomplete">Autocomplete</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#options">Options</a></li>
+                            <li><a href="#methods">Methods</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-10">
+                    <div id="get-started">
+                        <h2 class="mb-4">Get started</h2>
+
+                        <h4>Download</h4>
+                        <p>
+                            You can download a minimized version of the library or get the full source code at github.com.
+                        </p>
+                        <a class="btn btn-secondary" href="https://github.com/n2ref/coreui-form/archive/master.zip">Download source</a>
+
+                        <h4 class="section-margin">Install with npm</h4>
+                        <pre><code class="bash">$ npm install coreui-form-field-select2</code></pre>
+
+
+                        <h4 class="section-margin">Зависимости</h4>
+                        <p>
+                            Для корректной работы на странице необходимо наличие:
+                            <ul>
+                                <li><a href="https://github.com/n2ref/coreui-form" target="_blank">CoreUI Form</a></li>
+                                <li><a href="https://getbootstrap.com/docs/5.3" target="_blank">Bootstrap 5</a></li>
+                                <li><a href="https://jquery.com" target="_blank">jquery</a></li>
+                            </ul>
+                        </p>
+
+
+                        <h4 class="section-margin">Дополнительно</h4>
+                        <p>
+                            Другие примеры и более детальные настройки можно найти в документации <a href="https://select2.org">select2.org</a>
+                        </p>
+                    </div>
+
+
+
+                    <div id="examples">
+                        <h2 class="mb-5 section-margin">Examples</h2>
+
+                        <div class="mb-5">
+                            <h4 id="example-single-select">Single select</h4>
+                            <div class="mb-3">
+                                <div class="content-example">
+                                    <div id="single-select"></div>
+                                </div>
+                                <div class="content-markup">
+                                <pre><code class="html">
+    &lt;div id="single-select"&gt;&lt;/div&gt;
+
+    &lt;script&gt;
+        let options = [
+            '--',
+            'Reactive',
+            'Solution',
+            'Conglomeration',
+            'Algoritm',
+            'Holistic',
+        ];
+
+        CoreUI.form.create({
+            send    : {
+                url   : '/path/to/object/1',
+                method: 'post'
+            },
+            record  : {
+                select_field: null
+            },
+            fields  : [
+                {
+                    type: 'select2', name: 'select_field', label: 'Select', width: 250, options: options, select2: {
+                        placeholder: 'Choose one thing',
+                    }
+                },
+            ],
+            onSubmit: function (form, data) {
+                alert(JSON.stringify(data));
+                return false;
+            },
+            controls: [
+                {type: "submit", content: "Send"},
+            ],
+        }).render('single-select');
+    &lt;/script&gt;
+                                </code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="mb-5">
+                            <h4 id="example-multiple-select">Multiple select</h4>
+                            <div class="mb-3">
+                                <div class="content-example">
+                                    <div id="multiple-select"></div>
+                                </div>
+                                <div class="content-markup">
+                                <pre><code class="html">
+    &lt;div id="multiple-select"&gt;&lt;/div&gt;
+
+    &lt;script&gt;
+        let multipleOptions = [
+            { value: 'Reactive',       text: 'Reactive' },
+            { value: 'Solution',       text: 'Solution' },
+            { value: 'Conglomeration', text: 'Conglomeration' },
+            { value: 'Algoritm',       text: 'Algoritm' },
+            { value: 'Holistic',       text: 'Holistic' },
+        ];
+
+        CoreUI.form.create({
+            send    : {
+                url   : '/path/to/object/1',
+                method: 'post'
+            },
+            record  : {
+                select_field: [ 'Reactive', 'Algoritm' ]
+            },
+            fields  : [
+                {
+                    type: 'select2', name: 'select_field', label: 'Select', width: 250, attr: { multiple: "multiple" },
+                    options: multipleOptions
+                },
+            ],
+            onSubmit: function (form, data) {
+                alert(JSON.stringify(data));
+                return false;
+            },
+            controls: [
+                {type: "submit", content: "Send"},
+            ],
+        }).render('multiple-select');
+    &lt;/script&gt;
+                                </code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="mb-5">
+                            <h4 id="example-groups">Groups</h4>
+                            <div class="mb-3">
+                                <div class="content-example">
+                                    <div id="groups"></div>
+                                </div>
+                                <div class="content-markup">
+                                <pre><code class="html">
+    &lt;div id="groups"&gt;&lt;/div&gt;
+
+    &lt;script&gt;
+        let groupOptions = [
+            { value: '', text: 'No value' },
+            { type: "group", label: 'Group 1',
+                options : [
+                    { value: 1, text: 'Adams John' },
+                    { value: 2, text: 'Johnson Peter' },
+                ]
+            },
+            { type: "group", label: 'Group 2', attr: { class: "group-class"  },
+                options : [
+                    { value: 3, text: 'Lewis Frank' },
+                    { value: 4, text: 'Cruz Steve' },
+                    { value: 5, text: 'Donnun Nick' }
+                ]
+            }
+        ];
+
+        CoreUI.form.create({
+            send    : {
+                url   : '/path/to/object/1',
+                method: 'post'
+            },
+            record  : {
+                select_field: null
+            },
+            fields  : [
+                {
+                    type: 'select2', name: 'select_field', label: 'Select', width: 400, attr: { multiple: "multiple" },
+                    options: groupOptions
+                },
+            ],
+            onSubmit: function (form, data) {
+                alert(JSON.stringify(data));
+                return false;
+            },
+            controls: [
+                {type: "submit", content: "Send"},
+            ],
+        }).render('groups');
+
+    &lt;/script&gt;
+                                </code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="mb-5">
+                            <h4 id="example-dynamic-option">Dynamic options</h4>
+                            <div class="mb-3">
+                                <div class="content-example">
+                                    <div id="dynamic-select"></div>
+                                </div>
+                                <div class="content-markup">
+                                <pre><code class="html">
+    &lt;div id="dynamic-select"&gt;&lt;/div&gt;
+
+    &lt;script&gt;
+        let dynamicOptions = [
+            { value: 'Reactive',       text: 'Reactive' },
+            { value: 'Solution',       text: 'Solution' },
+            { value: 'Conglomeration', text: 'Conglomeration' },
+            { value: 'Algoritm',       text: 'Algoritm' },
+            { value: 'Holistic',       text: 'Holistic' },
+        ];
+
+        CoreUI.form.create({
+            send    : {
+                url   : '/path/to/object/1',
+                method: 'post'
+            },
+            record  : {
+                select_field: null
+            },
+            fields  : [
+                {
+                    type: 'select2', name: 'select_field', label: 'Select', width: 250, attr: { multiple: "multiple" },
+                    options: dynamicOptions,
+                    select2: {
+                        placeholder: 'Write your value',
+                        tags: true,
+                        tokenSeparators: [',', ' ']
+                    }
+                },
+            ],
+            onSubmit: function (form, data) {
+                alert(JSON.stringify(data));
+                return false;
+            },
+            controls: [
+                {type: "submit", content: "Send"},
+            ],
+        }).render('dynamic-select');
+    &lt;/script&gt;
+                                </code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="mb-5">
+                            <h4 id="example-validation">Validation</h4>
+                            <div class="mb-3">
+                                <div class="content-example">
+                                    <div id="validation"></div>
+                                </div>
+                                <div class="content-markup">
+                                <pre><code class="html">
+    &lt;div id="validation"&gt;&lt;/div&gt;
+
+    &lt;script&gt;
+        let validationOptions = {
+            '' : '--',
+            'Reactive' : 'Reactive',
+            'Solution' : 'Solution',
+            'Conglomeration' : 'Conglomeration',
+            'Algoritm' : 'Algoritm',
+            'Holistic' : 'Holistic',
+        };
+
+        CoreUI.form.create({
+            send    : {
+                url   : '/path/to/object/1',
+                method: 'post'
+            },
+            validate: true,
+            record  : {
+                select_field: null
+            },
+            fields  : [
+                {
+                    type: 'select2', name: 'select_field', label: 'Select', width: 250, required: true,
+                    invalidText: 'SELECT Value!!!',
+                    options: validationOptions,
+                    select2: {
+                        placeholder: 'Submit form for validation',
+                    }
+                },
+            ],
+            onSubmit: function (form, data) {
+                alert(JSON.stringify(data));
+                return false;
+            },
+            controls: [
+                {type: "submit", content: "Send"},
+            ],
+        }).render('validation');
+    &lt;/script&gt;
+                                </code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <h4 id="example-autocomplete">Autocomplete</h4>
+                            <div class="mb-3">
+                                <div class="content-example">
+                                    <div id="autocomplete"></div>
+                                </div>
+                                <div class="content-markup">
+                                <pre><code class="html">
+    &lt;div id="autocomplete"&gt;&lt;/div&gt;
+
+    &lt;script&gt;
+        CoreUI.form.create({
+            send    : {
+                url   : '/path/to/object/1',
+                method: 'post'
+            },
+            record  : {
+                select_field: null
+            },
+            fields  : [
+                {
+                    type: 'select2', name: 'select_field', label: 'Select', width: 300,
+                    select2: {
+                        minimumInputLength: 1,
+                        ajax: {
+                            url: 'data/autocomplete.json', // https://select2.org/data-sources/formats
+                            dataType: 'json'
+                        }
+                    }
+                },
+            ],
+            onSubmit: function (form, data) {
+                alert(JSON.stringify(data));
+                return false;
+            },
+            controls: [
+                {type: "submit", content: "Send"},
+            ],
+        }).render('autocomplete');
+    &lt;/script&gt;
+                                </code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div id="options" class="table-responsive mb-4">
+                        <h2 class="section-margin">Options field</h2>
+
+                        <table class="table table-bordered table-striped js-options-table">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>type</th>
+                                <th>default</th>
+                                <th>description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>name</th> <td>string</td> <td><code></code></td>
+                                <td>Имя поля, которое будет использоваться для получения и отправки значения</td>
+                            </tr>
+                            <tr>
+                                <th>label</th> <td>string</td> <td></td>
+                                <td>Название поля. Указанный текст будет находиться радом с полем</td>
+                            </tr>
+                            <tr>
+                                <th>labelWidth</th> <td>string|number</td> <td></td>
+                                <td>Ширина названия поля. Может быть указана текстом или цифрой. Например <code>150px</code> или <code>150</code></td>
+                            </tr>
+                            <tr>
+                                <th>width</th> <td>string|number</td> <td></td>
+                                <td>Ширина поля. Может быть указана текстом или цифрой. Например <code>250px</code> или <code>250</code></td>
+                            </tr>
+                            <tr>
+                                <th>description</th> <td>string</td> <td></td>
+                                <td>Описанием поля в виде текста под названием</td>
+                            </tr>
+                            <tr>
+                                <th>descriptionHelp</th> <td>string</td> <td></td>
+                                <td>Описанием поля в виде иконки рядом названием. Текст описания располагается при наведении</td>
+                            </tr>
+                            <tr>
+                                <th>invalidText</th> <td>string</td> <td></td>
+                                <td>Текст с описанием ошибки, который появляется при валидации</td>
+                            </tr>
+                            <tr>
+                                <th>validText</th> <td>string</td> <td></td>
+                                <td>Текст с описанием правильного выбора, который появляется при валидации</td>
+                            </tr>
+                            <tr>
+                                <th>fields</th> <td>Array</td> <td></td>
+                                <td>Список других полей, которые будут добавлены рядом текущем полем</td>
+                            </tr>
+                            <tr>
+                                <th>attr</th> <td>object</td> <td></td>
+                                <td>Набор атрибутов задаваемых для поля</td>
+                            </tr>
+                            <tr>
+                                <th>readonly</th> <td>bool</td> <td>false</td>
+                                <td>Признак для отображения поля в виде только для чтения</td>
+                            </tr>
+                            <tr>
+                                <th>required</th> <td>bool</td> <td>false</td>
+                                <td>Признак, что поле является обязательным</td>
+                            </tr>
+                            <tr>
+                                <th>show</th> <td>bool</td> <td>true</td>
+                                <td>Признак, что поле должно быть показано на форме</td>
+                            </tr>
+                            <tr>
+                                <th>position</th> <td>string</td> <td></td>
+                                <td>Название позиции на форме, где должно быть показано поле. Позиции указываются в шаблоне формы</td>
+                            </tr>
+                            <tr>
+                                <th>noSend</th> <td>bool</td> <td>false</td>
+                                <td>Признак, что поля не требуется отправлять на сервер</td>
+                            </tr>
+                            <tr>
+                                <th>options</th> <td>Array|Object</td> <td></td>
+                                <td>Список возможных значений для поля</td>
+                            </tr>
+                            <tr>
+                                <th>select2</th> <td>Object</td> <td></td>
+                                <td>
+                                    Настройки для поля select2. Варианты значений можно найти в
+                                    <a href="https://select2.org/configuration/options-api">документации</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div id="methods" class="table-responsive mb-4">
+                        <h2 class="section-margin">Methods field</h2>
+                        <table class="table table-bordered table-striped js-options-table">
+                            <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Return</th>
+                                <th>Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <pre><code>let field = CoreUI.form.getField( name )</code></pre>
+                                </td>
+                                <td>class</td>
+                                <td>Получение ранее созданного экземпляра поля по его имени</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <pre><code>field.getId()</code></pre>
+                                </td>
+                                <td>string</td>
+                                <td>Получение id поля</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <pre><code>field.getContentId()</code></pre>
+                                </td>
+                                <td>string</td>
+                                <td>Получение id контейнера поля</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <pre><code>field.getOptions()</code></pre>
+                                </td>
+                                <td>object</td>
+                                <td>Получение настроек поля</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <pre><code>field.show( duration )</code></pre>
+                                </td>
+                                <td></td>
+                                <td>Отображение поля</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <pre><code>field.hide( duration )</code></pre>
+                                </td>
+                                <td></td>
+                                <td>Скрытие поля</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <pre><code>field.readonly( isReadonly )</code></pre>
+                                </td>
+                                <td></td>
+                                <td>Изменение режима поля только для чтения</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <pre><code>field.getValue()</code></pre>
+                                </td>
+                                <td>array|string</td>
+                                <td>Получение значения из поля</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <pre><code>form.setValue( value )</code></pre>
+                                </td>
+                                <td></td>
+                                <td>Установка значения в поле</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <pre><code>field.validate( isValid, text )</code></pre>
+                                </td>
+                                <td>array|string</td>
+                                <td>Установка валидности поля</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <pre><code>field.isValid( isValid, text )</code></pre>
+                                </td>
+                                <td>boolean|null</td>
+                                <td>Проверка валидности поля</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <pre><code>field.isAlloySend( isValid, text )</code></pre>
+                                </td>
+                                <td>boolean</td>
+                                <td>Проверка на то, что поле можно отправлять</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <pre><code>field.renderContent()</code></pre>
+                                </td>
+                                <td></td>
+                                <td>Формирование контента поля</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="buffer-content"></div>
+    </section>
+
+    <footer>
+        <section class="copyright">
+            <div class="container">
+                <span class="float-start"></span>
+                <span class="float-end">Code licensed under the GNU License</span>
+            </div>
+        </section>
+    </footer>
+</body>
+</html>

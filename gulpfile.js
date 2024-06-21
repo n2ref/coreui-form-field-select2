@@ -1,170 +1,75 @@
-const gulp             = require('gulp');
-const concat           = require('gulp-concat');
-const sourcemaps       = require('gulp-sourcemaps');
-const uglify           = require('gulp-uglify');
-const htmlToJs         = require('gulp-html-to-js');
-const wrapFile         = require('gulp-wrap-file');
-const sass             = require('gulp-sass')(require('sass'));
-const rollup           = require('@rollup/stream');
-const rollupSourcemaps = require('rollup-plugin-sourcemaps');
-const rollupBabel      = require('@rollup/plugin-babel');
-const nodeResolve      = require('@rollup/plugin-node-resolve');
-const source           = require('vinyl-source-stream');
-const buffer           = require("vinyl-buffer");
+const gulp     = require('gulp');
+var concat     = require('gulp-concat');
+var sourcemaps = require('gulp-sourcemaps');
+var uglify     = require('gulp-uglify');
+var cleanCSS   = require('gulp-clean-css');
+
 
 
 var conf = {
     dist: "./dist",
     js: {
-        file: 'coreui-form-select2.js',
-        fileMin: 'coreui-form-select2.min.js',
-        main: 'src/js/main.js',
-        src: 'src/js/**/*.js'
-    },
-    css: {
-        fileMin: 'coreui.form-select2.min.css',
-        file: 'coreui.form-select2.css',
-        main: 'src/css/main.scss',
+        file: 'page.min.js',
         src: [
-            'src/css/**/*.scss',
+            'node_modules/jquery/dist/jquery.min.js',
+            'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
+            'node_modules/coreui-modal/dist/coreui-modal.min.js',
+            'src/js/highlight.pack.js',
         ]
     },
-    tpl: {
-        file: 'templates.js',
-        dist: './src/js',
+    css: {
+        file: 'page.min.css',
         src: [
-            'src/html/**/*.html',
-            'src/html/*.html'
+            'node_modules/bootstrap/dist/css/bootstrap.min.css',
+            'node_modules/bootstrap-icons/font/bootstrap-icons.min.css',
+            'src/css/github-gist.css',
+            'src/css/styles.css',
         ]
     }
 };
 
 
 
-gulp.task('build_css_min', function(){
-    return gulp.src(conf.css.main)
+gulp.task('build_css', function(){
+    return gulp.src(conf.css.src)
         .pipe(sourcemaps.init())
-        .pipe(sass({includePaths: ['node_modules'], outputStyle: 'compressed'}).on('error', sass.logError))
-        .pipe(concat(conf.css.fileMin))
+        .pipe(cleanCSS())
+        .pipe(concat(conf.css.file))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(conf.dist));
 });
 
-gulp.task('build_css_min_fast', function(){
-    return gulp.src(conf.css.main)
-        .pipe(sass({includePaths: ['node_modules']}).on('error', sass.logError))
-        .pipe(concat(conf.css.fileMin))
-        .pipe(gulp.dest(conf.dist));
-});
-
-gulp.task('build_css', function(){
-    return gulp.src(conf.css.main)
-        .pipe(sass({includePaths: ['node_modules']}).on('error', sass.logError))
+gulp.task('build_css_fast', function(){
+    return gulp.src(conf.css.src)
+        .pipe(sourcemaps.init())
         .pipe(concat(conf.css.file))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(conf.dist));
 });
 
 
 gulp.task('build_js', function() {
-    return rollup({
-        input: conf.js.main,
-        output: {
-            sourcemap: true,
-            format: 'umd',
-            name: "CoreUI.form.fields.select2"
-        },
-        onwarn: function (log, handler) {
-            if (log.code === 'CIRCULAR_DEPENDENCY') {
-                return; // Ignore circular dependency warnings
-            }
-            handler(log.message);
-        },
-        context: "window",
-        plugins: [
-            nodeResolve(),
-            rollupBabel({babelHelpers: 'bundled'}),
-        ]
-    })
-        .pipe(source(conf.js.file))
-        .pipe(buffer())
-        .pipe(gulp.dest(conf.dist));
-});
-
-gulp.task('build_js_min_fast', function() {
-    return rollup({
-        input: conf.js.main,
-        output: {
-            sourcemap: true,
-            format: 'umd',
-            name: "CoreUI.form.fields.select2"
-        },
-        onwarn: function (log, handler) {
-            if (log.code === 'CIRCULAR_DEPENDENCY') {
-                return; // Ignore circular dependency warnings
-            }
-            handler(log.message);
-        },
-        context: "window",
-        plugins: [
-            nodeResolve(),
-            rollupSourcemaps(),
-            rollupBabel({babelHelpers: 'bundled'}),
-        ]
-    })
-        .pipe(source(conf.js.fileMin))
-        .pipe(buffer())
-        .pipe(gulp.dest(conf.dist));
-});
-
-
-gulp.task('build_js_min', function() {
-    return rollup({
-        input: conf.js.main,
-        output: {
-            sourcemap: true,
-            format: 'umd',
-            name: "CoreUI.form.fields.select2"
-        },
-        onwarn: function (log, handler) {
-            if (log.code === 'CIRCULAR_DEPENDENCY') {
-                return; // Ignore circular dependency warnings
-            }
-            handler(log.message);
-        },
-        context: "window",
-        plugins: [
-            nodeResolve(),
-            rollupSourcemaps(),
-            rollupBabel({babelHelpers: 'bundled'}),
-        ]
-    })
-        .pipe(source(conf.js.fileMin))
-        .pipe(buffer())
+    return gulp.src(conf.js.src)
         .pipe(sourcemaps.init())
         .pipe(uglify())
+        .pipe(concat(conf.js.file, {newLine: ";\n"}))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(conf.dist));
+});
+
+gulp.task('build_js_fast', function() {
+    return gulp.src(conf.js.src)
+        .pipe(sourcemaps.init())
+        .pipe(concat(conf.js.file, {newLine: ";\n"}))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(conf.dist));
 });
 
 
-gulp.task('build_tpl', function() {
-    return gulp.src(conf.tpl.src)
-        .pipe(htmlToJs({global: 'tpl', concat: conf.tpl.file}))
-        .pipe(wrapFile({
-            wrapper: function(content, file) {
-                content = content.replace(/\\n/g, ' ');
-                content = content.replace(/[ ]{2,}/g, ' ');
-                return 'let ' + content + ";\nexport default tpl;"
-            }
-        }))
-        .pipe(gulp.dest(conf.tpl.dist));
-});
-
 
 gulp.task('build_watch', function() {
-    gulp.watch(conf.tpl.src, gulp.series(['build_tpl', 'build_js_min_fast']));
-    gulp.watch(conf.js.src, gulp.parallel(['build_js_min_fast']));
-    gulp.watch(conf.css.src, gulp.parallel(['build_css_min_fast']));
+    gulp.watch(conf.css.src, gulp.series(['build_css_fast']));
+    gulp.watch(conf.js.src, gulp.parallel(['build_js_fast']));
 });
 
-gulp.task("default", gulp.series([ 'build_tpl', 'build_js_min', 'build_js']));
+gulp.task("default", gulp.series([ 'build_js', 'build_css']));
