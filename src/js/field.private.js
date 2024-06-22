@@ -1,6 +1,6 @@
 import templates from "./templates";
 import utils     from "./utils";
-import 'select2';
+import select2   from 'select2';
 import 'ejs/ejs.min';
 
 
@@ -261,6 +261,7 @@ let fieldPrivate = {
             select2Options.closeOnSelect = false;
         }
 
+        select2(null, $);
         $('.content-' + field.getContentId() + ' select').select2(select2Options);
     }
 }

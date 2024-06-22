@@ -1,6 +1,6 @@
 {
   "name": "coreui-form-field-select2",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "CoreUI form field Select2",
   "scripts": {
     "build_all": "gulp build_tpl && gulp build_js && gulp build_js_min && gulp build_css_min && gulp build_css && npm run test_js",
@@ -32,6 +32,7 @@
     "rollup-plugin-sourcemaps": "0.6.3",
     "@rollup/plugin-babel": "6.0.4",
     "@rollup/plugin-node-resolve": "15.2.3",
+    "@rollup/plugin-commonjs": "26.0.1",
     "vinyl-source-stream": "2.0.0",
     "vinyl-buffer": "1.0.1",
     "sass": "1.76.0",
